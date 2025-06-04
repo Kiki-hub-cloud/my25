@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Для моего самого любимого</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --pink: #ff9bb3;
+            --dark-pink: #ff6b8b;
+            --blue: #89cff0;
+            --yellow: #fffacd;
+            --white: #fff;
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #fff9fb;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Анимация вступления */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* Герой секция */
+        .hero {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--pink) 0%, var(--blue) 100%);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            top: -50%;
+            left: -50%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="rgba(255,255,255,0.2)"><path d="M30,50 Q50,30 70,50 T90,50 Q70,70 50,50 T10,50 Q30,30 50,50 T30,50"></path></svg>');
+            background-size: 100px;
+            animation: move 20s linear infinite;
+            opacity: 0.3;
+        }
+
+        @keyframes move {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .hero-content {
+            z-index: 2;
+            max-width: 800px;
+            padding: 20px;
+        }
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 5rem;
+            margin-bottom: 20px;
+            color: var(--white);
+            text-shadow: 3px 3px 0 var(--dark-pink);
+            animation: fadeInDown 1s ease, float 4s ease-in-out infinite;
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            color: var(--white);
+            margin-bottom: 40px;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.5s forwards;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .scroll-down {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--white);
+            font-size: 1.2rem;
+            opacity: 0;
+            animation: fadeIn 1s ease 1s forwards, bounce 2s ease infinite 2s;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0) translateX(-50%); }
+            40% { transform: translateY(-20px) translateX(-50%); }
+            60% { transform: translateY(-10px) translateX(-50%); }
+        }
+
+        /* Секции */
+        section {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5rem;
+            margin-bottom: 50px;
+            color: var(--dark-pink);
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            width: 70%;
+            height: 3px;
+            background: linear-gradient(to right, transparent, var(--blue), transparent);
+            bottom: -15px;
+            left: 15%;
+        }
+
+        /* Карточки с воспоминаниями */
+        .memory-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .memory-card {
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+            opacity: 0;
+            transform: scale(0.9);
+            position: relative;
+        }
+
+        .memory-card.animate {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .memory-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(to right, var(--pink), var(--blue));
+        }
+
+        .memory-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .memory-img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.8s ease;
+        }
+
+        .memory-card:hover .memory-img {
+            transform: scale(1.1);
+        }
+
+        .memory-content {
+            padding: 20px;
+        }
+
+        .memory-date {
+            color: var(--blue);
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+
+        .memory-text {
+            line-height: 1.6;
+        }
+
+        /* Галерея */
+        .photo-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 40px;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            height: 250px;
+            box-shadow: var(--shadow);
+            transition: all 0.5s ease;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .gallery-item.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .gallery-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.8s ease;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+
+        .gallery-item:hover .gallery-img {
+            transform: scale(1.2);
+        }
+
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 107, 139, 0.8);
+            color: white;
+            padding: 15px;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-caption {
+            transform: translateY(0);
+        }
+
+        /* Секция "10 причин" */
+        .reasons-container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            margin-top: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .reasons-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--pink), var(--blue));
+        }
+
+        .reason-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.5s ease;
+        }
+
+        .reason-item.animate {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .reason-number {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.5rem;
+            color: var(--dark-pink);
+            margin-right: 20px;
+            min-width: 50px;
+            text-align: center;
+        }
+
+        .reason-text {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            flex: 1;
+        }
+
+        /* Секция "Письмо" */
+        .letter {
+            background: var(--yellow);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            margin-top: 40px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: all 0.5s ease;
+            opacity: 0;
+            transform: rotateY(90deg);
+        }
+
+        .letter.animate {
+            opacity: 1;
+            transform: rotateY(0);
+        }
+
+        .letter::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            border: 2px dashed var(--dark-pink);
+            border-radius: 10px;
+            pointer-events: none;
+        }
+
+        .letter-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            text-align: center;
+        }
+
+        /* Кнопка "Я люблю тебя" */
+        .love-btn {
+            display: block;
+            margin: 40px auto 0;
+            background: linear-gradient(to right, var(--pink), var(--dark-pink));
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 107, 139, 0.4);
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: scale(0.8);
+            animation: fadeInScale 1s ease 1s forwards;
+        }
+
+        @keyframes fadeInScale {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .love-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(255, 107, 139, 0.6);
+        }
+
+        .love-btn::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: rotate(45deg);
+            transition: all 0.5s ease;
+        }
+
+        .love-btn:hover::before {
+            left: 100%;
+        }
+
+        /* Анимация сердечек */
+        .hearts-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 20px;
+            color: var(--dark-pink);
+            animation: float-up 4s linear forwards;
+            opacity: 0;
+        }
+
+        @keyframes float-up {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Футер */
+        footer {
+            background: linear-gradient(to right, var(--pink), var(--blue));
+            color: white;
+            text-align: center;
+            padding: 50px 20px;
+            margin-top: 80px;
+            position: relative;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            left: 0;
+            width: 100%;
+            height: 50px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M1200 0L0 0 0 120 1200 120 1200 0z" fill="%23fff9fb"></path></svg>');
+            background-size: cover;
+        }
+
+        .footer-text {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        .signature {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2rem;
+            margin-top: 30px;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 3.5rem;
+            }
+            
+            .section-title {
+                font-size: 2.5rem;
+            }
+            
+            .memory-grid, .photo-gallery {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .reasons-container, .letter {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Герой секция -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Для моего любимого</h1>
+            <p class="subtitle">Этот сайт создан специально для тебя, чтобы напомнить, как ты дорог мне</p>
+        </div>
+        <div class="scroll-down">Листай вниз</div>
+    </section>
+
+    <!-- Секция "Наши воспоминания" -->
+    <section id="memories">
+        <h2 class="section-title">Наши моменты</h2>
+        <div class="memory-grid">
+            <div class="memory-card">
+                <img src="img/pervoe.jpg" alt="Первое фото" class="memory-img">
+                <div class="memory-content">
+                    <div class="memory-date">30 января 2022</div>
+                    <p class="memory-text">Помнишь наше первое фото вместе? Мы тогда так смущались, но все равно получилось очень мило!</p>
+                </div>
+            </div>
+            <div class="memory-card">
+                <img src="img/vtoroe.jpg" alt="Вторая встреча" class="memory-img">
+                <div class="memory-content">
+                    <div class="memory-date">13 марта 2022</div>
+                    <p class="memory-text">Наша следующая встреча, мы всегда это с трепетом так ждали.</p>
+                </div>
+            </div>
+            <div class="memory-card">
+                <img src="img/аааа.jpg" alt="А это ты" class="memory-img">
+                <div class="memory-content">
+                    <div class="memory-date"> 2024</div>
+                    <p class="memory-text">Просто красивый ты.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+<!-- Новая секция: "Наши любимые цитаты" -->
+<section id="quotes">
+    <h2 class="section-title">Наши любимые цитаты о любви</h2>
+    <div class="quotes-container">
+        <div class="quote-item">
+            <p>"Любовь — это не просто слово, это целая жизнь, наполненная счастьем."</p>
+        </div>
+        <div class="quote-item">
+            <p>"Ты — мой свет в темной ночи, моя надежда и моя любовь."</p>
+        </div>
+        <div class="quote-item">
+            <p>"В твоих глазах я нахожу свой дом."</p>
+        </div>
+    </div>
+</section>
+
+<!-- Новая секция: "Маленькие истории" -->
+<section id="stories">
+    <h2 class="section-title">Маленькие истории нашей любви</h2>
+    <div class="stories-list">
+        <div class="story">
+            <h3>Первое свидание</h3>
+            <p>Помню, как прошла наша первая встреча. Я не спала всю ночь из за волнения, а уже,если не ошибаюсь в 8 я должна была быть на вокзале. Когда увидела тебя,мне было так неловко на тебя смотреть из за всего смущения, но могу сказать точно, что как только я тебя увидела, ты показался мне особенным.</p>
+        </div>
+        <div class="story">
+            <h3>Знакомство с семьёй</h3>
+            <p>Ты тогда, как мне говорил совсем не переживал, но соглаушсь держался ты хорошо. Встреча прошла просто замечательно и ты понравился родителям и особенно запомнился как "Хороший молодой человек" моей бабушке, она про тебя всегда узнаёт и спрашивает самая первая. Не могу не отметить знакомство и с твоей семьёй, хоть прошёл почти месяц с такого знаменательного события, впечатления о таком тёплом приёме меня умиляют до сих пор</p>
+        </div>
+        <div class="story">
+            <h3>Наша первая ссора</h3>
+            <p>По крайней мере, которая у меня записана это была про то, что ты мне в чём то соврал, с тех времен уже прошло достаточно, и знаешь, ты действительно вырос и начал говорить мне правду, надеюсь дальше будет всё так же стабильно.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Новая анимация сердечек и звездочек по всему экрану -->
+<script>
+    // Добавим запуск случайных сердечек и звездочек при скролле
+    function createFloatingHearts() {
+        for (let i = 0; i < 15; i++) {
+            const star = document.createElement('div');
+            star.innerHTML = Math.random() > 0.5 ? '⭐' : '❤️';
+            star.className = 'floating-star';
+            star.style.left = Math.random() * 100 + 'vw';
+            star.style.top = Math.random() * 100 + 'vh';
+            star.style.fontSize = (Math.random() * 20 + 10) + 'px';
+            document.body.appendChild(star);
+            setTimeout(() => {
+                star.remove();
+            }, 3000);
+        }
+    }
+
+    // Расширим слушатель скролла
+    document.addEventListener('scroll', () => {
+        if (Math.random() < 0.02) { // редкий запуск
+            createFloatingHearts();
+        }
+    });
+</script>
+
+<style>
+/* Новые стили для звездочек и сердечек */
+.floating-star {
+    position: fixed;
+    z-index: 9999;
+    pointer-events: none;
+    animation: floatUp 3s ease forwards;
+}
+
+@keyframes floatUp {
+    from {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(-100vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+</style>
+    <!-- Галерея фотографий -->
+    <section id="gallery">
+        <h2 class="section-title">Наша галерея</h2>
+        <div class="photo-gallery">
+            <div class="gallery-item">
+                <img src="img/ml.jpg" alt="Мы вместе" class="gallery-img">
+                <div class="gallery-caption">Мой самый любимый кадр</div>
+            </div>
+            <div class="gallery-item">
+                <img src="img/nnn.jpg" alt="На концерте" class="gallery-img">
+                <div class="gallery-caption">Ты делаешь меня счастливой</div>
+            </div>
+            <div class="gallery-item">
+                <img src="img/s.jpg" alt="Наша традиция-ношение колец" class="gallery-img">
+                <div class="gallery-caption">Наша традиция-ношение колец</div>
+            </div>
+            <div class="gallery-item">
+                <img src="img/f.jpg" alt="Прогулка" class="gallery-img">
+                <div class="gallery-caption">Наши милые прогулки</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Секция "10 причин" -->
+    <section id="reasons">
+        <h2 class="section-title">10 причин почему я тебя люблю</h2>
+        <div class="reasons-container">
+            <div class="reason-item">
+                <div class="reason-number">1</div>
+                <p class="reason-text">Ты всегда знаешь, как поднять мне настроение, даже в самый плохой день.</p>
+            </div>
+            <div class="reason-item">
+                <div class="reason-number">2</div>
+                <p class="reason-text">Твоя улыбка заставляет мое сердце биться чаще.</p>
+            </div>
+            <div class="reason-item">
+                <div class="reason-number">3</div>
+                <p class="reason-text">Ты поддерживаешь меня во всех моих начинаниях.</p>
+            </div>
+            <div class="reason-item">
+                <div class="reason-number">4</div>
+                <p class="reason-text">С тобой я чувствую себя в безопасности и любимой.</p>
+            </div>
+            <div class="reason-item">
+                <div class="reason-number">5</div>
+                <p class="reason-text">Ты умеешь слушать и понимать меня без слов.</p>
+            </div>
+            <div class="reason-item">
+                <div class="reason-number">6</div>
+                <p class="reason-text">Ты тот человек, который мотивирует меня быть лучше.</p>
+            </div>
+            <div class="reason-item">
+                <div class="reason-number">7</div>
+                <p class="reason-text">Потому что ты согласился быть со мной.</p>
+            </div>
+            <div class="reason-item">
+                <div class="reason-number">8</div>
+                <p class="reason-text">Просто за то, что ты есть.</p>
+            </div>
+            <div class="reason-item">
+                <div class="reason-number">9</div>
+                <p class="reason-text">За то, что ты всегда стараешь обо мне позаботиться и помочь мне.</p>
+            </div>
+            <div class="reason-item">
+                <div class="reason-number">10</div>
+                <p class="reason-text">Мне не нужны причины,чтобы тебя любить,ты заслуживаешь большего и причины тебе просто не нужны.</p>
+            </div>
+            <!-- Добавьте еще 5 причин -->
+        </div>
+    </section>
+
+    <!-- Секция "Письмо" -->
+    <section id="letter">
+        <h2 class="section-title">Мое письмо тебе</h2>
+        <div class="letter">
+            <div class="letter-content">
+                <p>Дорогой мой,</p>
+                <p>Я создала этот сайт, чтобы сказать тебе, как сильно ты для меня значишь. Каждый день с тобой - это подарок.</p>
+                <p>Спасибо тебе за твою любовь, поддержку и за то, что ты просто есть в моей жизни.</p>
+                <p>Я люблю тебя больше, чем могу выразить словами.</p>
+                <p></p>
+            </div>
+        </div>
+        <button class="love-btn" id="loveBtn">Я люблю тебя!</button>
+    </section>
+
+    <!-- Футер -->
+    <footer>
+        <p class="footer-text">Этот сайт создан с любовью специально для тебя</p>
+        <div class="signature">Спасибо что ты есть)</div>
+    </footer>
+
+    <!-- Контейнер для сердечек -->
+    <div class="hearts-container" id="heartsContainer"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Анимация появления элементов при скролле
+            const animateOnScroll = () => {
+                const memoryCards = document.querySelectorAll('.memory-card');
+                const galleryItems = document.querySelectorAll('.gallery-item');
+                const reasonItems = document.querySelectorAll('.reason-item');
+                const letter = document.querySelector('.letter');
+                
+                const windowHeight = window.innerHeight;
+                const scrollY = window.scrollY || window.pageYOffset;
+                
+                memoryCards.forEach((card, index) => {
+                    const cardPosition = card.getBoundingClientRect().top + scrollY;
+                    if (scrollY + windowHeight > cardPosition + 100) {
+                        setTimeout(() => {
+                            card.classList.add('animate');
+                        }, index * 200);
+                    }
+                });
+                
+                galleryItems.forEach((item, index) => {
+                    const itemPosition = item.getBoundingClientRect().top + scrollY;
+                    if (scrollY + windowHeight > itemPosition + 100) {
+                        setTimeout(() => {
+                            item.classList.add('animate');
+                        }, index * 200);
+                    }
+                });
+                
+                reasonItems.forEach((item, index) => {
+                    const itemPosition = item.getBoundingClientRect().top + scrollY;
+                    if (scrollY + windowHeight > itemPosition + 100) {
+                        setTimeout(() => {
+                            item.classList.add('animate');
+                        }, index * 200);
+                    }
+                });
+                
+                const letterPosition = letter.getBoundingClientRect().top + scrollY;
+                if (scrollY + windowHeight > letterPosition + 100) {
+                    setTimeout(() => {
+                        letter.classList.add('animate');
+                    }, 200);
+                }
+            };
+            
+            window.addEventListener('scroll', animateOnScroll);
+            animateOnScroll(); // Инициализация при загрузке
+            
+            // Кнопка "Я люблю тебя"
+            const loveBtn = document.getElementById('loveBtn');
+            const heartsContainer = document.getElementById('heartsContainer');
+            
+            loveBtn.addEventListener('click', function() {
+                createHearts();
+                this.textContent = 'Я люблю тебя очень сильно!';
+                
+                setTimeout(() => {
+                    this.textContent = 'Я люблю тебя!';
+                }, 2000);
+            });
+            
+            function createHearts() {
+                for (let i = 0; i < 30; i++) {
+                    const heart = document.createElement('div');
+                    heart.classList.add('heart');
+                    heart.innerHTML = '❤️';
+                    heart.style.left = Math.random() * 100 + 'vw';
+                    heart.style.animationDuration = Math.random() * 3 + 2 + 's';
+                    heart.style.fontSize = Math.random() * 20 + 10 + 'px';
+                    heartsContainer.appendChild(heart);
+                    
+                    setTimeout(() => {
+                        heart.remove();
+                    }, 4000);
+                }
+            }
+            
+            // Плавный скролл
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
